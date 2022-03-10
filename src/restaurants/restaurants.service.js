@@ -4,8 +4,14 @@ function list() {
   return knex("restaurants").select("restaurant_name", "restaurant_cuisine");
 }
 
+// Complete the create() function to create a new restaurant in the restaurants table, 
+// returning all columns of the newly created restaurant in the result.
+
 function create(restaurant) {
-  // Your solution here
+  return knex("restaurants")
+    .insert(restaurant)
+    .returning("*")
+    .then((data) => data[0]);
 }
 
 function read(restaurant_id = 0) {
@@ -19,8 +25,10 @@ function update(updatedRestaurant) {
     .update(updatedRestaurant, "*");
 }
 
+// Complete the destroy() function to delete a restaurant given the restaurant ID.
+
 function destroy(restaurant_id) {
-  // Your solution here
+  return knex("restaurants").where({ restaurant_id }).del();
 }
 
 module.exports = {
